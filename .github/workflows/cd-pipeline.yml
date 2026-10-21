@@ -11,6 +11,19 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
+name: Pipeline de CD - GHCR & Deploy via Docker Compose
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ 'v*.*.*' ] # Dispara na criação de tags de versão (ex: v1.0.0)
+
+permissions:
+  contents: read
+  packages: write # Permissão necessária para publicar imagens no GHCR
+
+env:
+  REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}/minha-api-node
 
 jobs:
@@ -74,3 +87,4 @@ jobs:
           docker compose up -d --remove-orphans
           # Exibe os contêineres em execução
           docker compose ps
+
